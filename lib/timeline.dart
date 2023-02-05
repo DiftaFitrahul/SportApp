@@ -10,15 +10,8 @@ class TimeLine extends StatelessWidget {
     return SizedBox(
       height: 1000,
       child: Padding(
-        padding: const EdgeInsets.only(left: 28, right: 28, top: 8),
+        padding: const EdgeInsets.only(left: 28, right: 28),
         child: Column(children: [
-          const Text(
-            "TimeLine",
-            style: TextStyle(color: Colors.black, fontSize: 30),
-          ),
-          const SizedBox(
-            height: 30,
-          ),
           IntrinsicHeight(
             child: Row(
               mainAxisAlignment: MainAxisAlignment.center,
