@@ -1,12 +1,14 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_lorem/flutter_lorem.dart';
 import 'package:sportapp/Stats.dart';
 import 'package:sportapp/lineup.dart';
+import './model/matchTeams.dart';
 import 'package:sportapp/model/standing_league.dart';
-import 'package:sportapp/service/FetchData/fd_matchbyid.dart';
+import 'package:sportapp/service/FetchData/fd_standingleaguebyid.dart';
 import 'package:sportapp/standings.dart';
 import 'package:sportapp/result.dart';
 import 'package:sportapp/timeline.dart';
+
+import 'service/FetchData/fd_matchbyid.dart';
 
 class MatchPage extends StatefulWidget {
   const MatchPage({super.key});
@@ -16,27 +18,19 @@ class MatchPage extends StatefulWidget {
 }
 
 class _MatchPageState extends State<MatchPage> {
-  late Future<List<StandingLeague>> standingLeague;
   bool statisticsIsPressed = true;
   bool timelineIsPressed = false;
   bool lineupsIsPressed = false;
   bool rankingIsPressed = false;
-
-  @override
-  void initState() {
-    standingLeague = FetchDataStandingsLeague.fetchData();
-    super.initState();
-  }
-
+ 
   @override
   Widget build(BuildContext context) {
     double height = MediaQuery.of(context).size.height * 0.45;
     return Scaffold(
       body: FutureBuilder(
-        future: standingLeague,
+        future: FetchDataMatch.fetchData("325104"),
         builder: (context, snapshot) {
           if (snapshot.hasData) {
-            print(snapshot.data![1].timId);
             return Container(
               color: const Color.fromARGB(255, 229, 233, 236),
               child: CustomScrollView(
@@ -179,14 +173,13 @@ class _MatchPageState extends State<MatchPage> {
                   )),
                   SliverList(
                       delegate: SliverChildBuilderDelegate(
-                          childCount:
-                              (rankingIsPressed) ? snapshot.data!.length : 1,
+                          childCount: (rankingIsPressed) ? 1 : 1,
                           (_, index) => (rankingIsPressed)
-                              ? Standings(
-                                  data: snapshot.data!,
-                                  number: index,
-                                )
-                              : const Statistics()))
+                              ? const Statistics()
+                              : TimeLine(
+                                  timeLine: snapshot.data!.matchEvent!,
+                                  number: 1,
+                                )))
                 ],
               ),
             );
