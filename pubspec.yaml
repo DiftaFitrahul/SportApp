@@ -13,6 +13,7 @@ dependencies:
   font_awesome_flutter: ^10.3.0 
   http: ^0.13.5 
   shimmer: ^2.0.0
+  percent_indicator: ^4.0.1
 
 dev_dependencies:
   flutter_test:

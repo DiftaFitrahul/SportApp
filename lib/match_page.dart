@@ -36,8 +36,9 @@ class _MatchPageState extends State<MatchPage> {
         future: standingLeague,
         builder: (context, snapshot) {
           if (snapshot.hasData) {
+            print(snapshot.data![1].timId);
             return Container(
-              color: Colors.white,
+              color: const Color.fromARGB(255, 229, 233, 236),
               child: CustomScrollView(
                 slivers: [
                   SliverAppBar(
@@ -157,8 +158,10 @@ class _MatchPageState extends State<MatchPage> {
                       child: Container(
                         height: 20,
                         decoration: BoxDecoration(
-                          border: Border.all(width: 0, color: Colors.white),
-                          color: Colors.white,
+                          border: Border.all(
+                              width: 0,
+                              color: const Color.fromARGB(255, 229, 233, 236)),
+                          color: const Color.fromARGB(255, 229, 233, 236),
                           borderRadius: const BorderRadius.only(
                             topLeft: Radius.circular(20.0),
                             topRight: Radius.circular(20.0),
@@ -171,16 +174,19 @@ class _MatchPageState extends State<MatchPage> {
                       delegate: SliverChildBuilderDelegate(
                     childCount: 1,
                     (context, index) {
-                      return standings();
+                      return (rankingIsPressed) ? standings() : statisticText();
                     },
                   )),
                   SliverList(
                       delegate: SliverChildBuilderDelegate(
-                          childCount: snapshot.data!.length,
-                          (_, index) => Standings(
-                                data: snapshot.data!,
-                                number: index,
-                              )))
+                          childCount:
+                              (rankingIsPressed) ? snapshot.data!.length : 1,
+                          (_, index) => (rankingIsPressed)
+                              ? Standings(
+                                  data: snapshot.data!,
+                                  number: index,
+                                )
+                              : const Statistics()))
                 ],
               ),
             );
@@ -189,6 +195,31 @@ class _MatchPageState extends State<MatchPage> {
           }
           return const CircularProgressIndicator();
         },
+      ),
+    );
+  }
+
+  Widget statisticText() {
+    return Padding(
+      padding: const EdgeInsets.only(left: 30, right: 30, top: 8),
+      child: Row(
+        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+        children: [
+          Text(
+            "Real Madrid",
+            style: TextStyle(
+                color: Colors.indigoAccent[700],
+                fontWeight: FontWeight.w500,
+                fontSize: 15),
+          ),
+          Text(
+            "FC Barcelona",
+            style: TextStyle(
+                color: Colors.indigoAccent[700],
+                fontWeight: FontWeight.w500,
+                fontSize: 15),
+          )
+        ],
       ),
     );
   }

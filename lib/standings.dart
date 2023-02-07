@@ -1,26 +1,25 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/src/widgets/framework.dart';
-import 'package:flutter/src/widgets/placeholder.dart';
-import 'package:shimmer/shimmer.dart';
 import 'package:sportapp/model/standing_league.dart';
 import 'package:sportapp/service/FetchData/fd_teambyid.dart';
+import 'package:sportapp/shimmer_widget.dart';
 
 class Standings extends StatelessWidget {
-  int? number;
-  List<StandingLeague> data;
-  Standings({super.key, this.number, required this.data});
+  final int? number;
+  final List<StandingLeague> data;
+  const Standings({super.key, required this.number, required this.data});
 
   @override
   Widget build(BuildContext context) {
     return Container(
         height: 50,
         margin: const EdgeInsets.only(
-          left: 10,
-          right: 10,
+          left: 5,
+          right: 5,
         ),
         padding: const EdgeInsets.only(
           bottom: 3,
           top: 3,
+          right: 5,
         ),
         decoration: BoxDecoration(
             color: (number! % 2 == 1) ? Colors.white : Colors.grey[100]),
@@ -61,35 +60,21 @@ class Standings extends StatelessWidget {
               return Text("error");
             }
             return Row(
-              children: [
-                Shimmer.fromColors(
-                    baseColor: Colors.grey[400]!,
-                    highlightColor: Colors.grey[300]!,
-                    child: Container(
-                      width: 30,
-                      alignment: Alignment.center,
-                      decoration: ShapeDecoration(
-                          shape: RoundedRectangleBorder(),
-                          color: Colors.grey[400]),
-                    )),
+              children: const [
                 Padding(
-                  padding: const EdgeInsets.only(
-                      right: 5, top: 5, bottom: 5, left: 3),
-                  child: Image.network(snapshot.data!.clubLogo ?? ""),
-                ),
-                Expanded(child: Text(snapshot.data!.clubName ?? "")),
-                SizedBox(
-                  width: 185,
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceAround,
-                    children: [
-                      Text(data[number!].match.toString()),
-                      Text(data[number!].win.toString()),
-                      Text(data[number!].draw.toString()),
-                      Text(data[number!].lose.toString()),
-                    ],
+                  padding: EdgeInsets.only(right: 5, left: 3),
+                  child: ShimmerWidget.rectangular(
+                    width: 30,
+                    height: double.infinity,
                   ),
-                )
+                ),
+                Padding(
+                  padding: EdgeInsets.only(right: 5, left: 3),
+                  child: ShimmerWidget.circular(width: 40),
+                ),
+                Expanded(
+                    child: ShimmerWidget.rectangular(
+                        width: 10, height: double.infinity)),
               ],
             );
           },
