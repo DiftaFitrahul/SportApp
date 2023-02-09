@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:sportapp/Stats.dart';
@@ -177,9 +179,7 @@ class _MatchPageState extends State<MatchPage> {
                               delegate: SliverChildBuilderDelegate(
                             childCount: 1,
                             (context, index) {
-                              return (rankingIsPressed)
-                                  ? standings()
-                                  : statisticText();
+                              return getTitleSliver();
                             },
                           )),
                           Consumer(
@@ -189,13 +189,15 @@ class _MatchPageState extends State<MatchPage> {
                                   .when(
                                     data: (standingleague) => SliverList(
                                         delegate: SliverChildBuilderDelegate(
-                                            childCount:
-                                                (rankingIsPressed) ? 1 : 1,
-                                            (_, index) => (rankingIsPressed)
-                                                ? Standings(
-                                                    data: standingleague,
-                                                    number: index)
-                                                : const Statistics())),
+                                            childCount: 1, (_, index) {
+                                      if (statisticsIsPressed) {
+                                        return const Statistics();
+                                      } else {
+                                        return Standings(
+                                            number: index,
+                                            data: standingleague);
+                                      }
+                                    })),
                                     error: (error, stackTrace) {
                                       return SliverList(
                                           delegate: SliverChildBuilderDelegate(
@@ -213,9 +215,7 @@ class _MatchPageState extends State<MatchPage> {
                       );
                     },
                     error: (error, stackTrace) => const Text("Error"),
-                    loading: () => Column(
-                      
-                    ),
+                    loading: () => const CircularProgressIndicator(),
                   ),
             )));
   }
@@ -277,5 +277,17 @@ class _MatchPageState extends State<MatchPage> {
         ],
       ),
     );
+  }
+
+  Widget getTitleSliver() {
+    if (statisticsIsPressed == true) {
+      return statisticText();
+    } else if (timelineIsPressed == true) {
+      return const Text("TimeLIne");
+    } else if (lineupsIsPressed == true) {
+      return const Text("Lineup");
+    } else {
+      return standings();
+    }
   }
 }
