@@ -1,9 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:sportapp/Homescreen.dart';
 import 'package:sportapp/match_page.dart';
 
 void main() {
-  runApp(const ProviderScope(child:  MainApp()));
+  runApp(const ProviderScope(child: MainApp()));
 }
 
 class MainApp extends StatelessWidget {
@@ -11,7 +12,11 @@ class MainApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return const MaterialApp(
-        debugShowCheckedModeBanner: false, home: MatchPage());
+    return MaterialApp(
+        debugShowCheckedModeBanner: false, home: const HomeScreen(),
+        routes: { 
+          MatchPage.routeName: (context) => const MatchPage()
+        },
+        );
   }
 }
