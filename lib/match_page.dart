@@ -8,7 +8,6 @@ import 'package:sportapp/standings.dart';
 import 'package:sportapp/result.dart';
 import 'package:sportapp/timeline.dart';
 
-
 class MatchPage extends ConsumerStatefulWidget {
   static const routeName = '/matchPge';
   const MatchPage({super.key});
@@ -39,7 +38,6 @@ class _MatchPageState extends ConsumerState<MatchPage> {
                       title: Row(
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           children: [
-                            
                             Row(
                               children: const [
                                 Icon(Icons.sports_volleyball_sharp),
@@ -168,12 +166,17 @@ class _MatchPageState extends ConsumerState<MatchPage> {
                       },
                     )),
                     SliverList(
-                        delegate: SliverChildBuilderDelegate(childCount: (statisticsIsPressed)? 1: 2,
-                            (_, index) {
+                        delegate: SliverChildBuilderDelegate(
+                            childCount: (statisticsIsPressed)
+                                ? 1
+                                : dataMatch.matchEvent!.length, (_, index) {
                       if (statisticsIsPressed) {
                         return const Statistics();
                       } else {
-                        return TimeLinePage(number: index, timeLine: dataMatch.matchEvent ?? [],);
+                        return TimeLinePage(
+                          number: index,
+                          timeLine: dataMatch.matchEvent ?? [],
+                        );
                       }
                     })),
                   ],

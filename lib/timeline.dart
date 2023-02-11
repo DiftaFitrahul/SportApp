@@ -10,21 +10,8 @@ class TimeLinePage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return SizedBox(
-      height: 40,
-      child: Padding(
-          padding: const EdgeInsets.only(left: 28, right: 28),
-          child: timelineData()),
-    );
-  }
-
-  Widget timelineData() {
-    if (timeLine[number]['type'] == 'substitution') {
-      print(timeLine[number]['type']);
-      return TimeLine(timeLine: timeLine[number]);
-    } else {
-      print(timeLine[number]['type']);
-      return const Text('halo');
-    }
+    return Padding(
+        padding: const EdgeInsets.only(left: 28, right: 28),
+        child: TimeLine(timeLine: timeLine[number]));
   }
 }
