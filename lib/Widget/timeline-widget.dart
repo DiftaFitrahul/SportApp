@@ -1,36 +1,32 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/src/widgets/framework.dart';
 import 'package:flutter/src/widgets/placeholder.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:sportapp/provider/provider.dart';
 
-class TimeLine extends StatelessWidget {
-  final int teamID;
-  final String type;
-  final String playerName;
-  final String? relatedPlayerName;
-  final int minute;
-  const TimeLine(
-      {super.key,
-      required this.type,
-      required this.teamID,
-      required this.minute,
-      required this.playerName,
-      this.relatedPlayerName});
+class TimeLine extends ConsumerWidget {
+  final Map<String, dynamic> timeLine;
+  const TimeLine({super.key, required this.timeLine});
 
   @override
-  Widget build(BuildContext context) {
-    return const Placeholder();
+  Widget build(BuildContext context, WidgetRef ref) {
+    final dataMatch = ref.watch(matchDataNotifier);
+    return timelineSubtitution(
+      homeTeamId: dataMatch.homeTeam?['team_id'] ?? 0,
+    );
   }
 
-  Widget timelineSubtitution(
-      {required int teamId,
-      required String playerInName,
-      required String playerOutName,
-      required int minute}) {
+  Widget timelineSubtitution({
+    required int homeTeamId,
+  }) {
+    print(timeLine['team_id']);
+    print(homeTeamId);
+
     return IntrinsicHeight(
       child: Row(
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
-          (teamID == 6402)
+          (timeLine['team_id'] == homeTeamId)
               ? Flexible(
                   child: Column(
                     children: [
@@ -45,7 +41,7 @@ class TimeLine extends StatelessWidget {
                         child: Padding(
                           padding: const EdgeInsets.symmetric(horizontal: 10),
                           child: Text(
-                            playerInName,
+                            timeLine['player_name'],
                             style: const TextStyle(color: Colors.white),
                           ),
                         ),
@@ -64,7 +60,7 @@ class TimeLine extends StatelessWidget {
                         child: Padding(
                           padding: const EdgeInsets.symmetric(horizontal: 10),
                           child: Text(
-                            playerOutName,
+                            timeLine['related_player_name'],
                             style: const TextStyle(color: Colors.black),
                           ),
                         ),
@@ -84,12 +80,12 @@ class TimeLine extends StatelessWidget {
             decoration: BoxDecoration(
                 borderRadius: BorderRadius.circular(50), color: Colors.blue),
             child: Text(
-              minute.toString(),
+              timeLine['minute'].toString(),
               style: const TextStyle(
                   color: Colors.white, fontWeight: FontWeight.bold),
             ),
           ),
-          (teamID == 6402)
+          (timeLine['team_id'] == homeTeamId)
               ? const Flexible(
                   child: SizedBox(
                   width: double.infinity,
@@ -108,7 +104,7 @@ class TimeLine extends StatelessWidget {
                         child: Padding(
                           padding: const EdgeInsets.symmetric(horizontal: 10),
                           child: Text(
-                            playerInName,
+                            timeLine['player_name'],
                             style: const TextStyle(color: Colors.white),
                           ),
                         ),
@@ -127,7 +123,7 @@ class TimeLine extends StatelessWidget {
                         child: Padding(
                           padding: const EdgeInsets.symmetric(horizontal: 10),
                           child: Text(
-                            playerOutName,
+                            timeLine['related_player_name'],
                             style: const TextStyle(color: Colors.black),
                           ),
                         ),

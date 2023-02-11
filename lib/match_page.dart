@@ -6,6 +6,7 @@ import 'package:sportapp/Stats.dart';
 import 'package:sportapp/provider/provider.dart';
 import 'package:sportapp/standings.dart';
 import 'package:sportapp/result.dart';
+import 'package:sportapp/timeline.dart';
 
 
 class MatchPage extends ConsumerStatefulWidget {
@@ -25,8 +26,8 @@ class _MatchPageState extends ConsumerState<MatchPage> {
   @override
   Widget build(BuildContext context) {
     double height = MediaQuery.of(context).size.height * 0.45;
-    final seasonID = ref.watch(matchDataNotifier).seasonId;
-    return ref.watch(dataStandingsProvider(seasonID.toString())).when(
+    final dataMatch = ref.watch(matchDataNotifier);
+    return ref.watch(dataStandingsProvider(dataMatch.seasonId.toString())).when(
       data: (standingLeague) {
         return Scaffold(
             body: Container(
@@ -167,12 +168,12 @@ class _MatchPageState extends ConsumerState<MatchPage> {
                       },
                     )),
                     SliverList(
-                        delegate: SliverChildBuilderDelegate(childCount: 1,
+                        delegate: SliverChildBuilderDelegate(childCount: (statisticsIsPressed)? 1: 2,
                             (_, index) {
                       if (statisticsIsPressed) {
                         return const Statistics();
                       } else {
-                        return Standings(number: index, data: standingLeague);
+                        return TimeLinePage(number: index, timeLine: dataMatch.matchEvent ?? [],);
                       }
                     })),
                   ],
