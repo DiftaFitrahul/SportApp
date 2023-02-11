@@ -3,12 +3,10 @@ import 'dart:developer';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:sportapp/Stats.dart';
-import 'package:sportapp/model/matchTeams.dart';
 import 'package:sportapp/provider/provider.dart';
 import 'package:sportapp/standings.dart';
 import 'package:sportapp/result.dart';
 
-import 'service/FetchData/fd_matchbyid.dart';
 
 class MatchPage extends ConsumerStatefulWidget {
   static const routeName = '/matchPge';
@@ -40,13 +38,7 @@ class _MatchPageState extends ConsumerState<MatchPage> {
                       title: Row(
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           children: [
-                            IconButton(
-                              icon: const Icon(
-                                Icons.density_medium,
-                              ),
-                              color: Colors.white,
-                              onPressed: () {},
-                            ),
+                            
                             Row(
                               children: const [
                                 Icon(Icons.sports_volleyball_sharp),
