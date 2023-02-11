@@ -10,15 +10,15 @@ import 'package:sportapp/result.dart';
 
 import 'service/FetchData/fd_matchbyid.dart';
 
-class MatchPage extends StatefulWidget {
+class MatchPage extends ConsumerStatefulWidget {
   static const routeName = '/matchPge';
   const MatchPage({super.key});
 
   @override
-  State<MatchPage> createState() => _MatchPageState();
+  ConsumerState<MatchPage> createState() => _MatchPageState();
 }
 
-class _MatchPageState extends State<MatchPage> {
+class _MatchPageState extends ConsumerState<MatchPage> {
   bool statisticsIsPressed = true;
   bool timelineIsPressed = false;
   bool lineupsIsPressed = false;
@@ -27,176 +27,172 @@ class _MatchPageState extends State<MatchPage> {
   @override
   Widget build(BuildContext context) {
     double height = MediaQuery.of(context).size.height * 0.45;
-    return Scaffold(
-        body: Container(
-            color: const Color.fromARGB(255, 229, 233, 236),
-            child: CustomScrollView(
-              slivers: [
-                SliverAppBar(
-                  toolbarHeight: 60,
-                  title: Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: [
-                        IconButton(
-                          icon: const Icon(
-                            Icons.density_medium,
-                          ),
-                          color: Colors.white,
-                          onPressed: () {},
-                        ),
-                        Row(
-                          children: const [
-                            Icon(Icons.sports_volleyball_sharp),
-                            Text(
-                              "posever",
-                              style: TextStyle(fontWeight: FontWeight.bold),
-                            )
-                          ],
-                        ),
-                        IconButton(
-                            onPressed: () {},
-                            icon: const Icon(
-                              Icons.account_circle_outlined,
-                              size: 30,
-                            ))
-                      ]),
-                  bottom: PreferredSize(
-                      preferredSize: const Size.fromHeight(30),
-                      child: Padding(
-                        padding: const EdgeInsets.all(8.0),
-                        child: Row(
+    final seasonID = ref.watch(matchDataNotifier).seasonId;
+    return ref.watch(dataStandingsProvider(seasonID.toString())).when(
+      data: (standingLeague) {
+        return Scaffold(
+            body: Container(
+                color: const Color.fromARGB(255, 229, 233, 236),
+                child: CustomScrollView(
+                  slivers: [
+                    SliverAppBar(
+                      toolbarHeight: 60,
+                      title: Row(
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           children: [
-                            TextButton(
-                                onPressed: () {
-                                  setState(() {
-                                    statisticsIsPressed = true;
-                                    timelineIsPressed = false;
-                                    lineupsIsPressed = false;
-                                    rankingIsPressed = false;
-                                  });
-                                },
-                                child: Text(
-                                  "Statistics",
-                                  style: statisticsIsPressed
-                                      ? const TextStyle(color: Colors.white)
-                                      : const TextStyle(color: Colors.white60),
-                                )),
-                            TextButton(
-                                onPressed: () {
-                                  setState(() {
-                                    statisticsIsPressed = false;
-                                    timelineIsPressed = true;
-                                    lineupsIsPressed = false;
-                                    rankingIsPressed = false;
-                                  });
-                                },
-                                child: Text(
-                                  "Timeline",
-                                  style: timelineIsPressed
-                                      ? const TextStyle(color: Colors.white)
-                                      : const TextStyle(color: Colors.white60),
-                                )),
-                            TextButton(
-                              onPressed: () {
-                                setState(() {
-                                  statisticsIsPressed = false;
-                                  timelineIsPressed = false;
-                                  lineupsIsPressed = true;
-                                  rankingIsPressed = false;
-                                });
-                              },
-                              child: Text(
-                                "Lineups",
-                                style: lineupsIsPressed
-                                    ? const TextStyle(color: Colors.white)
-                                    : const TextStyle(color: Colors.white60),
+                            IconButton(
+                              icon: const Icon(
+                                Icons.density_medium,
                               ),
+                              color: Colors.white,
+                              onPressed: () {},
                             ),
-                            TextButton(
-                                onPressed: () {
-                                  setState(() {
-                                    statisticsIsPressed = false;
-                                    timelineIsPressed = false;
-                                    lineupsIsPressed = false;
-                                    rankingIsPressed = true;
-                                  });
-                                },
-                                child: Text(
-                                  "Ranking",
-                                  style: rankingIsPressed
-                                      ? const TextStyle(color: Colors.white)
-                                      : const TextStyle(color: Colors.white60),
-                                )),
-                          ],
-                        ),
-                      )),
-                  pinned: true,
-                  expandedHeight: height,
-                  backgroundColor: Colors.blueAccent[700],
-                  flexibleSpace: FlexibleSpaceBar(
-                    background: Container(
-                        color: Colors.blueAccent[700], child: const Result()),
-                  ),
-                ),
-                SliverToBoxAdapter(
-                  child: Container(
-                    color: Colors.blueAccent[700],
-                    height: 20,
-                    child: Container(
-                      height: 20,
-                      decoration: BoxDecoration(
-                        border: Border.all(
-                            width: 0,
-                            color: const Color.fromARGB(255, 229, 233, 236)),
-                        color: const Color.fromARGB(255, 229, 233, 236),
-                        borderRadius: const BorderRadius.only(
-                          topLeft: Radius.circular(20.0),
-                          topRight: Radius.circular(20.0),
+                            Row(
+                              children: const [
+                                Icon(Icons.sports_volleyball_sharp),
+                                Text(
+                                  "posever",
+                                  style: TextStyle(fontWeight: FontWeight.bold),
+                                )
+                              ],
+                            ),
+                            IconButton(
+                                onPressed: () {},
+                                icon: const Icon(
+                                  Icons.account_circle_outlined,
+                                  size: 30,
+                                ))
+                          ]),
+                      bottom: PreferredSize(
+                          preferredSize: const Size.fromHeight(30),
+                          child: Padding(
+                            padding: const EdgeInsets.all(8.0),
+                            child: Row(
+                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                              children: [
+                                TextButton(
+                                    onPressed: () {
+                                      setState(() {
+                                        statisticsIsPressed = true;
+                                        timelineIsPressed = false;
+                                        lineupsIsPressed = false;
+                                        rankingIsPressed = false;
+                                      });
+                                    },
+                                    child: Text(
+                                      "Statistics",
+                                      style: statisticsIsPressed
+                                          ? const TextStyle(color: Colors.white)
+                                          : const TextStyle(
+                                              color: Colors.white60),
+                                    )),
+                                TextButton(
+                                    onPressed: () {
+                                      setState(() {
+                                        statisticsIsPressed = false;
+                                        timelineIsPressed = true;
+                                        lineupsIsPressed = false;
+                                        rankingIsPressed = false;
+                                      });
+                                    },
+                                    child: Text(
+                                      "Timeline",
+                                      style: timelineIsPressed
+                                          ? const TextStyle(color: Colors.white)
+                                          : const TextStyle(
+                                              color: Colors.white60),
+                                    )),
+                                TextButton(
+                                  onPressed: () {
+                                    setState(() {
+                                      statisticsIsPressed = false;
+                                      timelineIsPressed = false;
+                                      lineupsIsPressed = true;
+                                      rankingIsPressed = false;
+                                    });
+                                  },
+                                  child: Text(
+                                    "Lineups",
+                                    style: lineupsIsPressed
+                                        ? const TextStyle(color: Colors.white)
+                                        : const TextStyle(
+                                            color: Colors.white60),
+                                  ),
+                                ),
+                                TextButton(
+                                    onPressed: () {
+                                      setState(() {
+                                        statisticsIsPressed = false;
+                                        timelineIsPressed = false;
+                                        lineupsIsPressed = false;
+                                        rankingIsPressed = true;
+                                      });
+                                    },
+                                    child: Text(
+                                      "Ranking",
+                                      style: rankingIsPressed
+                                          ? const TextStyle(color: Colors.white)
+                                          : const TextStyle(
+                                              color: Colors.white60),
+                                    )),
+                              ],
+                            ),
+                          )),
+                      pinned: true,
+                      expandedHeight: height,
+                      backgroundColor: Colors.blueAccent[700],
+                      flexibleSpace: FlexibleSpaceBar(
+                        background: Container(
+                            color: Colors.blueAccent[700],
+                            child: const Result()),
+                      ),
+                    ),
+                    SliverToBoxAdapter(
+                      child: Container(
+                        color: Colors.blueAccent[700],
+                        height: 20,
+                        child: Container(
+                          height: 20,
+                          decoration: BoxDecoration(
+                            border: Border.all(
+                                width: 0,
+                                color:
+                                    const Color.fromARGB(255, 229, 233, 236)),
+                            color: const Color.fromARGB(255, 229, 233, 236),
+                            borderRadius: const BorderRadius.only(
+                              topLeft: Radius.circular(20.0),
+                              topRight: Radius.circular(20.0),
+                            ),
+                          ),
                         ),
                       ),
                     ),
-                  ),
-                ),
-                SliverList(
-                    delegate: SliverChildBuilderDelegate(
-                  childCount: 1,
-                  (context, index) {
-                    return getTitleSliver();
-                  },
-                )),
-                Consumer(builder: (context, ref, child) {
-                  final matchData = ref.watch(matchDataNotifier);
-                  return ref
-                      .watch(
-                          dataStandingsProvider(matchData.seasonId.toString()))
-                      .when(
-                        data: (standingleague) => SliverList(
-                            delegate: SliverChildBuilderDelegate(childCount: 1,
-                                (_, index) {
-                          if (statisticsIsPressed) {
-                            return const Statistics();
-                          } else {
-                            return Standings(
-                                number: index, data: standingleague);
-                          }
-                        })),
-                        error: (error, stackTrace) {
-                          return SliverList(
-                              delegate: SliverChildBuilderDelegate(
-                                  (_, __) => const Text('Error')));
-                        },
-                        loading: () {
-                          return SliverList(
-                              delegate: SliverChildBuilderDelegate(
-                                  childCount: 1,
-                                  (_, __) =>
-                                      const CircularProgressIndicator()));
-                        },
-                      );
-                })
-              ],
-            )));
+                    SliverList(
+                        delegate: SliverChildBuilderDelegate(
+                      childCount: 1,
+                      (context, index) {
+                        return getTitleSliver();
+                      },
+                    )),
+                    SliverList(
+                        delegate: SliverChildBuilderDelegate(childCount: 1,
+                            (_, index) {
+                      if (statisticsIsPressed) {
+                        return const Statistics();
+                      } else {
+                        return Standings(number: index, data: standingLeague);
+                      }
+                    })),
+                  ],
+                )));
+      },
+      error: (error, stackTrace) {
+        return const Scaffold(body: Center(child: Text('error')));
+      },
+      loading: () {
+        return const Scaffold(body: Center(child: CircularProgressIndicator()));
+      },
+    );
   }
 
   Widget statisticText() {
