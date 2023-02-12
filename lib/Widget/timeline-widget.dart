@@ -44,386 +44,290 @@ class TimeLine extends ConsumerWidget {
   }
 
   Widget goal({required int homeTeamId}) {
-    return Row(
-      mainAxisAlignment: MainAxisAlignment.center,
-      children: [
-        (timeLine['team_id'] == homeTeamId)
-            ? Flexible(
-                child: Container(
-                alignment: Alignment.centerLeft,
-                height: 23,
-                width: double.infinity,
-                decoration: BoxDecoration(
-                    color: Colors.lightGreen,
-                    borderRadius: BorderRadius.circular(20)),
-                child: Padding(
-                  padding: const EdgeInsets.symmetric(horizontal: 10),
-                  child: Text(
-                    timeLine['player_name'],
-                    style: const TextStyle(color: Colors.white, fontSize: 10),
-                  ),
-                ),
-              ))
-            : const Flexible(
-                child: SizedBox(
-                width: double.infinity,
-              )),
-        Container(
-          margin: const EdgeInsets.symmetric(horizontal: 6),
-          alignment: Alignment.center,
-          width: 22,
-          height: 22,
-          decoration: BoxDecoration(
-              borderRadius: BorderRadius.circular(50), color: Colors.blue[700]),
-          child: Text(
-            "${timeLine['minute']}'",
-            style: const TextStyle(
-                color: Colors.white, fontWeight: FontWeight.w400, fontSize: 10),
-          ),
-        ),
-        (timeLine['team_id'] != homeTeamId)
-            ? Flexible(
-                child: Container(
-                alignment: Alignment.centerLeft,
-                height: 23,
-                width: double.infinity,
-                decoration: BoxDecoration(
-                    color: Colors.lightGreen,
-                    borderRadius: BorderRadius.circular(20)),
-                child: Padding(
-                  padding: const EdgeInsets.symmetric(horizontal: 10),
-                  child: Text(
-                    timeLine['player_name'],
-                    style: const TextStyle(color: Colors.white, fontSize: 10),
-                  ),
-                ),
-              ))
-            : const Flexible(
-                child: SizedBox(
-                width: double.infinity,
-              )),
-      ],
+    return Padding(
+      padding: const EdgeInsets.symmetric(vertical: 6),
+      child: Row(
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: [
+          (timeLine['team_id'] == homeTeamId)
+              ? timeLineWidget(
+                  timeLine['player_name'],
+                  Colors.greenAccent[400]!,
+                  const Icon(
+                    Icons.sports_soccer,
+                    size: 15,
+                    color: Colors.white,
+                  ))
+              : const Flexible(
+                  child: SizedBox(
+                  width: double.infinity,
+                )),
+          minuteWidget(timeLine['minute']),
+          (timeLine['team_id'] != homeTeamId)
+              ? timeLineWidget(
+                  timeLine['player_name'],
+                  Colors.greenAccent[400]!,
+                  const Icon(
+                    Icons.sports_soccer,
+                    size: 15,
+                    color: Colors.white,
+                  ))
+              : const Flexible(
+                  child: SizedBox(
+                  width: double.infinity,
+                )),
+        ],
+      ),
     );
   }
 
   Widget yellowCard({required int homeTeamId}) {
-    return Row(
-      mainAxisAlignment: MainAxisAlignment.center,
-      children: [
-        (timeLine['team_id'] == homeTeamId)
-            ? Flexible(
-                child: Container(
-                alignment: Alignment.centerLeft,
-                height: 23,
-                width: double.infinity,
-                decoration: BoxDecoration(
-                    color: Colors.yellow,
-                    borderRadius: BorderRadius.circular(20)),
-                child: Padding(
-                  padding: const EdgeInsets.symmetric(horizontal: 10),
-                  child: Text(
-                    timeLine['player_name'],
-                    style: const TextStyle(color: Colors.white, fontSize: 10),
-                  ),
-                ),
-              ))
-            : const Flexible(
-                child: SizedBox(
-                width: double.infinity,
-              )),
-        Container(
-          margin: const EdgeInsets.symmetric(horizontal: 6),
-          alignment: Alignment.center,
-          width: 22,
-          height: 22,
-          decoration: BoxDecoration(
-              borderRadius: BorderRadius.circular(50), color: Colors.blue[700]),
-          child: Text(
-            "${timeLine['minute']}'",
-            style: const TextStyle(
-                color: Colors.white, fontWeight: FontWeight.w400, fontSize: 10),
-          ),
-        ),
-        (timeLine['team_id'] != homeTeamId)
-            ? Flexible(
-                child: Container(
-                alignment: Alignment.centerLeft,
-                height: 23,
-                width: double.infinity,
-                decoration: BoxDecoration(
-                    color: Colors.yellow,
-                    borderRadius: BorderRadius.circular(20)),
-                child: Padding(
-                  padding: const EdgeInsets.symmetric(horizontal: 10),
-                  child: Text(
-                    timeLine['player_name'],
-                    style: const TextStyle(color: Colors.white, fontSize: 10),
-                  ),
-                ),
-              ))
-            : const Flexible(
-                child: SizedBox(
-                width: double.infinity,
-              )),
-      ],
+    return Padding(
+      padding: const EdgeInsets.symmetric(vertical: 6),
+      child: Row(
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: [
+          (timeLine['team_id'] == homeTeamId)
+              ? timeLineWidget(
+                  timeLine['player_name'],
+                  Colors.orange,
+                  const Icon(
+                    Icons.priority_high_sharp,
+                    size: 14,
+                    color: Colors.white,
+                  ))
+              : const Flexible(
+                  child: SizedBox(
+                  width: double.infinity,
+                )),
+          minuteWidget(timeLine['minute']),
+          (timeLine['team_id'] != homeTeamId)
+              ? timeLineWidget(
+                  timeLine['player_name'],
+                  Colors.orange,
+                  const Icon(
+                    Icons.priority_high_sharp,
+                    size: 14,
+                    color: Colors.white,
+                  ))
+              : const Flexible(
+                  child: SizedBox(
+                  width: double.infinity,
+                )),
+        ],
+      ),
     );
   }
 
   Widget injury({required int homeTeamId}) {
-    return Row(
-      mainAxisAlignment: MainAxisAlignment.center,
-      children: [
-        (timeLine['team_id'] == homeTeamId)
-            ? Flexible(
-                child: Container(
-                alignment: Alignment.centerLeft,
-                height: 23,
-                width: double.infinity,
-                decoration: BoxDecoration(
-                    color: Colors.pink,
-                    borderRadius: BorderRadius.circular(20)),
-                child: Padding(
-                  padding: const EdgeInsets.symmetric(horizontal: 10),
-                  child: Text(
-                    timeLine['player_name'],
-                    style: const TextStyle(color: Colors.white, fontSize: 10),
-                  ),
-                ),
-              ))
-            : const Flexible(
-                child: SizedBox(
-                width: double.infinity,
-              )),
-        Container(
-          margin: const EdgeInsets.symmetric(horizontal: 6),
-          alignment: Alignment.center,
-          width: 22,
-          height: 22,
-          decoration: BoxDecoration(
-              borderRadius: BorderRadius.circular(50), color: Colors.blue[700]),
-          child: Text(
-            "${timeLine['minute']}'",
-            style: const TextStyle(
-                color: Colors.white, fontWeight: FontWeight.w400, fontSize: 10),
-          ),
-        ),
-        (timeLine['team_id'] != homeTeamId)
-            ? Flexible(
-                child: Container(
-                alignment: Alignment.centerLeft,
-                height: 23,
-                width: double.infinity,
-                decoration: BoxDecoration(
-                    color: Colors.pink,
-                    borderRadius: BorderRadius.circular(20)),
-                child: Padding(
-                  padding: const EdgeInsets.symmetric(horizontal: 10),
-                  child: Text(
-                    timeLine['player_name'],
-                    style: const TextStyle(color: Colors.white, fontSize: 10),
-                  ),
-                ),
-              ))
-            : const Flexible(
-                child: SizedBox(
-                width: double.infinity,
-              )),
-      ],
+    return Padding(
+      padding: const EdgeInsets.symmetric(vertical: 6),
+      child: Row(
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: [
+          (timeLine['team_id'] == homeTeamId)
+              ? timeLineWidget(
+                  timeLine['player_name'],
+                  Colors.red,
+                  const Icon(
+                    Icons.personal_injury,
+                    size: 15,
+                    color: Colors.white,
+                  ))
+              : const Flexible(
+                  child: SizedBox(
+                  width: double.infinity,
+                )),
+          minuteWidget(timeLine['minute']),
+          (timeLine['team_id'] != homeTeamId)
+              ? timeLineWidget(
+                  timeLine['player_name'],
+                  Colors.red,
+                  const Icon(
+                    Icons.personal_injury,
+                    size: 15,
+                    color: Colors.white,
+                  ))
+              : const Flexible(
+                  child: SizedBox(
+                  width: double.infinity,
+                )),
+        ],
+      ),
     );
   }
 
   Widget backFromInjury({required int homeTeamId}) {
-    return Row(
-      mainAxisAlignment: MainAxisAlignment.center,
-      children: [
-        (timeLine['team_id'] == homeTeamId)
-            ? Flexible(
-                child: Container(
-                alignment: Alignment.centerLeft,
-                height: 23,
-                width: double.infinity,
-                decoration: BoxDecoration(
-                    color: Colors.purple,
-                    borderRadius: BorderRadius.circular(20)),
-                child: Padding(
-                  padding: const EdgeInsets.symmetric(horizontal: 10),
-                  child: Text(
-                    timeLine['player_name'],
-                    style: const TextStyle(color: Colors.white, fontSize: 10),
-                  ),
-                ),
-              ))
-            : const Flexible(
-                child: SizedBox(
-                width: double.infinity,
-              )),
-        Container(
-          margin: const EdgeInsets.symmetric(horizontal: 6),
-          alignment: Alignment.center,
-          width: 22,
-          height: 22,
-          decoration: BoxDecoration(
-              borderRadius: BorderRadius.circular(50), color: Colors.blue[700]),
-          child: Text(
-            "${timeLine['minute']}'",
-            style: const TextStyle(
-                color: Colors.white, fontWeight: FontWeight.w400, fontSize: 10),
-          ),
-        ),
-        (timeLine['team_id'] != homeTeamId)
-            ? Flexible(
-                child: Container(
-                alignment: Alignment.centerLeft,
-                height: 23,
-                width: double.infinity,
-                decoration: BoxDecoration(
-                    color: Colors.purple,
-                    borderRadius: BorderRadius.circular(20)),
-                child: Padding(
-                  padding: const EdgeInsets.symmetric(horizontal: 10),
-                  child: Text(
-                    timeLine['player_name'],
-                    style: const TextStyle(color: Colors.white, fontSize: 10),
-                  ),
-                ),
-              ))
-            : const Flexible(
-                child: SizedBox(
-                width: double.infinity,
-              )),
-      ],
+    return Padding(
+      padding: const EdgeInsets.symmetric(vertical: 6),
+      child: Row(
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: [
+          (timeLine['team_id'] == homeTeamId)
+              ? timeLineWidget(
+                  timeLine['player_name'],
+                  Colors.purple,
+                  const Icon(
+                    Icons.health_and_safety,
+                    size: 15,
+                    color: Colors.white,
+                  ))
+              : const Flexible(
+                  child: SizedBox(
+                  width: double.infinity,
+                )),
+          minuteWidget(timeLine['minute']),
+          (timeLine['team_id'] != homeTeamId)
+              ? timeLineWidget(
+                  timeLine['player_name'],
+                  Colors.purple,
+                  const Icon(
+                    Icons.health_and_safety,
+                    size: 15,
+                    color: Colors.white,
+                  ))
+              : const Flexible(
+                  child: SizedBox(
+                  width: double.infinity,
+                )),
+        ],
+      ),
     );
   }
 
   Widget subtitution({
     required int homeTeamId,
   }) {
-    return IntrinsicHeight(
-      child: Row(
-        mainAxisAlignment: MainAxisAlignment.center,
-        children: [
-          (timeLine['team_id'] == homeTeamId)
-              ? Flexible(
-                  child: Column(
-                    children: [
-                      Flexible(
-                          child: Container(
-                        alignment: Alignment.centerLeft,
-                        height: 23,
-                        width: double.infinity,
-                        decoration: BoxDecoration(
-                            color: Colors.blue[800],
-                            borderRadius: BorderRadius.circular(20)),
-                        child: Padding(
-                          padding: const EdgeInsets.symmetric(
-                            horizontal: 10,
-                          ),
-                          child: Text(
+    return Padding(
+      padding: const EdgeInsets.symmetric(vertical: 6),
+      child: IntrinsicHeight(
+        child: Row(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            (timeLine['team_id'] == homeTeamId)
+                ? Flexible(
+                    child: Column(
+                      children: [
+                        timeLineWidget(
                             timeLine['player_name'],
-                            style: const TextStyle(
-                                color: Colors.white, fontSize: 10),
-                          ),
+                            Colors.blue[800]!,
+                            const Icon(
+                              Icons.arrow_forward,
+                              size: 14,
+                              color: Colors.white,
+                            )),
+                        const SizedBox(
+                          height: 4,
                         ),
-                      )),
-                      const SizedBox(
-                        height: 4,
-                      ),
-                      Flexible(
-                          child: Container(
-                        alignment: Alignment.centerLeft,
-                        height: 23,
-                        width: double.infinity,
-                        decoration: BoxDecoration(
-                            color: Colors.grey,
-                            borderRadius: BorderRadius.circular(20)),
-                        child: Padding(
-                          padding: const EdgeInsets.symmetric(
-                            horizontal: 10,
-                          ),
-                          child: Text(
+                        timeLineWidget(
                             timeLine['related_player_name'],
-                            style: const TextStyle(
-                                color: Colors.black, fontSize: 10),
-                          ),
+                            Colors.grey,
+                            const Icon(
+                              Icons.arrow_back,
+                              size: 14,
+                              color: Colors.white,
+                            ))
+                      ],
+                    ),
+                  )
+                : const Flexible(
+                    child: SizedBox(
+                    width: double.infinity,
+                  )),
+            minuteWidget(timeLine['minute']),
+            (timeLine['team_id'] == homeTeamId)
+                ? const Flexible(
+                    child: SizedBox(
+                    width: double.infinity,
+                  ))
+                : Flexible(
+                    child: Column(
+                      children: [
+                        timeLineWidget(
+                            timeLine['player_name'],
+                            Colors.blue[800]!,
+                            const Icon(
+                              Icons.arrow_forward,
+                              size: 14,
+                              color: Colors.white,
+                            )),
+                        const SizedBox(
+                          height: 4,
                         ),
-                      )),
-                    ],
-                  ),
-                )
-              : const Flexible(
-                  child: SizedBox(
-                  width: double.infinity,
-                )),
-          Container(
-            margin: const EdgeInsets.symmetric(horizontal: 6),
-            alignment: Alignment.center,
-            width: 22,
-            height: 22,
-            decoration: BoxDecoration(
-                borderRadius: BorderRadius.circular(50),
-                color: Colors.blue[700]),
-            child: Text(
-              "${timeLine['minute']}'",
-              style: const TextStyle(
-                  color: Colors.white,
-                  fontWeight: FontWeight.w400,
-                  fontSize: 10),
-            ),
+                        timeLineWidget(
+                            timeLine['related_player_name'],
+                            Colors.grey,
+                            const Icon(
+                              Icons.arrow_back,
+                              size: 14,
+                              color: Colors.white,
+                            ))
+                      ],
+                    ),
+                  )
+          ],
+        ),
+      ),
+    );
+  }
+
+  Widget timeLineWidget(String name, Color color, Icon icon) {
+    return Flexible(
+        child: Container(
+      height: 23,
+      decoration:
+          BoxDecoration(borderRadius: BorderRadius.circular(20), boxShadow: [
+        BoxShadow(
+            color: Color.fromARGB(255, 122, 122, 122).withOpacity(0.4),
+            blurRadius: 5,
+            spreadRadius: 1,
+            offset: Offset(0, 3))
+      ]),
+      child: Container(
+        alignment: Alignment.centerLeft,
+        height: 23,
+        width: double.infinity,
+        decoration: BoxDecoration(
+            color: color, borderRadius: BorderRadius.circular(20)),
+        child: Padding(
+          padding: const EdgeInsets.symmetric(horizontal: 7),
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: [
+              Text(
+                name,
+                style: const TextStyle(color: Colors.white, fontSize: 10),
+              ),
+              icon
+            ],
           ),
-          (timeLine['team_id'] == homeTeamId)
-              ? const Flexible(
-                  child: SizedBox(
-                  width: double.infinity,
-                ))
-              : Flexible(
-                  child: Column(
-                    children: [
-                      Flexible(
-                          child: Container(
-                        alignment: Alignment.centerLeft,
-                        height: 23,
-                        width: double.infinity,
-                        decoration: BoxDecoration(
-                            color: Colors.blue[800],
-                            borderRadius: BorderRadius.circular(20)),
-                        child: Padding(
-                          padding: const EdgeInsets.symmetric(
-                            horizontal: 10,
-                          ),
-                          child: Text(
-                            timeLine['player_name'],
-                            style: const TextStyle(
-                                color: Colors.white, fontSize: 10),
-                          ),
-                        ),
-                      )),
-                      const SizedBox(
-                        height: 4,
-                      ),
-                      Flexible(
-                          child: Container(
-                        alignment: Alignment.centerLeft,
-                        height: 23,
-                        margin: const EdgeInsets.symmetric(vertical: 2),
-                        width: double.infinity,
-                        decoration: BoxDecoration(
-                            color: Colors.grey,
-                            borderRadius: BorderRadius.circular(20)),
-                        child: Padding(
-                          padding: const EdgeInsets.symmetric(
-                            horizontal: 10,
-                          ),
-                          child: Text(
-                            timeLine['related_player_name'],
-                            style: const TextStyle(
-                                color: Colors.black, fontSize: 10),
-                          ),
-                        ),
-                      )),
-                    ],
-                  ),
-                ),
-        ],
+        ),
+      ),
+    ));
+  }
+
+  Widget minuteWidget(int minute) {
+    return Container(
+      margin: const EdgeInsets.symmetric(horizontal: 7),
+      decoration:
+          BoxDecoration(borderRadius: BorderRadius.circular(50), boxShadow: [
+        BoxShadow(
+            color: Color.fromARGB(255, 122, 122, 122).withOpacity(0.4),
+            blurRadius: 3,
+            spreadRadius: 2,
+            offset: Offset(0, 2))
+      ]),
+      child: Container(
+        alignment: Alignment.center,
+        width: 22,
+        height: 22,
+        decoration: BoxDecoration(
+            borderRadius: BorderRadius.circular(50), color: Colors.blue[700]),
+        child: Text(
+          "$minute'",
+          style: const TextStyle(
+              color: Colors.white, fontWeight: FontWeight.w400, fontSize: 10),
+        ),
       ),
     );
   }

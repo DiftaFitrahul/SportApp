@@ -165,7 +165,10 @@ class Statistics extends StatelessWidget {
               ),
             ],
           ),
-          Text(statisticType),
+          Text(
+            statisticType,
+            style: const TextStyle(fontSize: 10),
+          ),
           Row(
             mainAxisAlignment: MainAxisAlignment.start,
             children: [
