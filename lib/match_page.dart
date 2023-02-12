@@ -175,7 +175,7 @@ class _MatchPageState extends ConsumerState<MatchPage> {
                       } else {
                         return TimeLinePage(
                           number: index,
-                          timeLine: dataMatch.matchEvent ?? [],
+                          timeLines: dataMatch.matchEvent ?? [],
                         );
                       }
                     })),
