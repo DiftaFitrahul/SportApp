@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:simple_animations/animation_builder/play_animation_builder.dart';
 
 import 'provider/provider.dart';
 
@@ -16,43 +17,43 @@ class TimeLinePage extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final dataMatch = ref.watch(matchDataNotifier);
-    bool isPressed = ref.watch(tabBarDataNotifier).timelineIsPressed;
-    if (ref.watch(tabBarDataNotifier).statisticsIsPressed ||
-        ref.watch(tabBarDataNotifier).lineupsIsPressed ||
-        ref.watch(tabBarDataNotifier).rankingIsPressed) {
-      isPressed = false;
-    }
     final Map<String, dynamic> timeLine = timeLines[number];
     return Padding(
         padding: const EdgeInsets.only(left: 28, right: 28),
-        child: displayTimeline(timeLine, dataMatch, isPressed));
+        child: displayTimeline(
+          timeLine,
+          dataMatch,
+        ));
   }
 
-  Widget displayTimeline(timeLine, dataMatch, isPressed) {
+  Widget displayTimeline(
+    timeLine,
+    dataMatch,
+  ) {
     if (timeLine['type'] == 'substitution') {
-      return subtitution(isPressed,
+      return subtitution(
           homeTeamId: dataMatch.homeTeam?['team_id'] ?? 0, timeLine: timeLine);
     } else if (timeLine['type'] == 'goal') {
-      return goal(isPressed,
+      return goal(
           homeTeamId: dataMatch.homeTeam?['team_id'] ?? 0, timeLine: timeLine);
     }
     if (timeLine['type'] == 'yellowcard') {
-      return yellowCard(isPressed,
+      return yellowCard(
           homeTeamId: dataMatch.homeTeam?['team_id'] ?? 0, timeLine: timeLine);
     }
     if (timeLine['type'] == 'injury') {
-      return injury(isPressed,
+      return injury(
           homeTeamId: dataMatch.homeTeam?['team_id'] ?? 0, timeLine: timeLine);
     }
     if (timeLine['type'] == 'back from injury') {
-      return backFromInjury(isPressed,
+      return backFromInjury(
           homeTeamId: dataMatch.homeTeam?['team_id'] ?? 0, timeLine: timeLine);
     } else {
       return const Text('No Data');
     }
   }
 
-  Widget goal(isPressed,
+  Widget goal(
       {required int homeTeamId, required Map<String, dynamic> timeLine}) {
     return Padding(
       padding: const EdgeInsets.symmetric(vertical: 6),
@@ -68,7 +69,7 @@ class TimeLinePage extends ConsumerWidget {
                     size: 15,
                     color: Colors.white,
                   ),
-                  isPressed)
+                )
               : const Flexible(
                   child: SizedBox(
                   width: double.infinity,
@@ -83,7 +84,7 @@ class TimeLinePage extends ConsumerWidget {
                     size: 15,
                     color: Colors.white,
                   ),
-                  isPressed)
+                )
               : const Flexible(
                   child: SizedBox(
                   width: double.infinity,
@@ -93,7 +94,7 @@ class TimeLinePage extends ConsumerWidget {
     );
   }
 
-  Widget yellowCard(isPressed,
+  Widget yellowCard(
       {required int homeTeamId, required Map<String, dynamic> timeLine}) {
     return Padding(
       padding: const EdgeInsets.symmetric(vertical: 6),
@@ -109,7 +110,7 @@ class TimeLinePage extends ConsumerWidget {
                     size: 14,
                     color: Colors.white,
                   ),
-                  isPressed)
+                )
               : const Flexible(
                   child: SizedBox(
                   width: double.infinity,
@@ -124,7 +125,7 @@ class TimeLinePage extends ConsumerWidget {
                     size: 14,
                     color: Colors.white,
                   ),
-                  isPressed)
+                )
               : const Flexible(
                   child: SizedBox(
                   width: double.infinity,
@@ -134,7 +135,7 @@ class TimeLinePage extends ConsumerWidget {
     );
   }
 
-  Widget injury(isPressed,
+  Widget injury(
       {required int homeTeamId, required Map<String, dynamic> timeLine}) {
     return Padding(
       padding: const EdgeInsets.symmetric(vertical: 6),
@@ -150,7 +151,7 @@ class TimeLinePage extends ConsumerWidget {
                     size: 15,
                     color: Colors.white,
                   ),
-                  isPressed)
+                )
               : const Flexible(
                   child: SizedBox(
                   width: double.infinity,
@@ -165,7 +166,7 @@ class TimeLinePage extends ConsumerWidget {
                     size: 15,
                     color: Colors.white,
                   ),
-                  isPressed)
+                )
               : const Flexible(
                   child: SizedBox(
                   width: double.infinity,
@@ -175,7 +176,7 @@ class TimeLinePage extends ConsumerWidget {
     );
   }
 
-  Widget backFromInjury(isPressed,
+  Widget backFromInjury(
       {required int homeTeamId, required Map<String, dynamic> timeLine}) {
     return Padding(
       padding: const EdgeInsets.symmetric(vertical: 6),
@@ -191,7 +192,7 @@ class TimeLinePage extends ConsumerWidget {
                     size: 15,
                     color: Colors.white,
                   ),
-                  isPressed)
+                )
               : const Flexible(
                   child: SizedBox(
                   width: double.infinity,
@@ -206,7 +207,7 @@ class TimeLinePage extends ConsumerWidget {
                     size: 15,
                     color: Colors.white,
                   ),
-                  isPressed)
+                )
               : const Flexible(
                   child: SizedBox(
                   width: double.infinity,
@@ -216,7 +217,7 @@ class TimeLinePage extends ConsumerWidget {
     );
   }
 
-  Widget subtitution(isPressed,
+  Widget subtitution(
       {required int homeTeamId, required Map<String, dynamic> timeLine}) {
     return Padding(
       padding: const EdgeInsets.symmetric(vertical: 6),
@@ -229,26 +230,26 @@ class TimeLinePage extends ConsumerWidget {
                     child: Column(
                       children: [
                         timeLineWidget(
-                            timeLine['player_name'],
-                            Colors.blue[800]!,
-                            const Icon(
-                              Icons.arrow_forward,
-                              size: 14,
-                              color: Colors.white,
-                            ),
-                            isPressed),
+                          timeLine['player_name'],
+                          Colors.blue[800]!,
+                          const Icon(
+                            Icons.arrow_forward,
+                            size: 14,
+                            color: Colors.white,
+                          ),
+                        ),
                         const SizedBox(
                           height: 4,
                         ),
                         timeLineWidget(
-                            timeLine['related_player_name'],
-                            Colors.grey,
-                            const Icon(
-                              Icons.arrow_back,
-                              size: 14,
-                              color: Colors.white,
-                            ),
-                            isPressed)
+                          timeLine['related_player_name'],
+                          Colors.grey,
+                          const Icon(
+                            Icons.arrow_back,
+                            size: 14,
+                            color: Colors.white,
+                          ),
+                        )
                       ],
                     ),
                   )
@@ -266,26 +267,26 @@ class TimeLinePage extends ConsumerWidget {
                     child: Column(
                       children: [
                         timeLineWidget(
-                            timeLine['player_name'],
-                            Colors.blue[800]!,
-                            const Icon(
-                              Icons.arrow_forward,
-                              size: 14,
-                              color: Colors.white,
-                            ),
-                            isPressed),
+                          timeLine['player_name'],
+                          Colors.blue[800]!,
+                          const Icon(
+                            Icons.arrow_forward,
+                            size: 14,
+                            color: Colors.white,
+                          ),
+                        ),
                         const SizedBox(
                           height: 4,
                         ),
                         timeLineWidget(
-                            timeLine['related_player_name'],
-                            Colors.grey,
-                            const Icon(
-                              Icons.arrow_back,
-                              size: 14,
-                              color: Colors.white,
-                            ),
-                            isPressed)
+                          timeLine['related_player_name'],
+                          Colors.grey,
+                          const Icon(
+                            Icons.arrow_back,
+                            size: 14,
+                            color: Colors.white,
+                          ),
+                        )
                       ],
                     ),
                   )
@@ -295,11 +296,14 @@ class TimeLinePage extends ConsumerWidget {
     );
   }
 
-  Widget timeLineWidget(String name, Color color, Icon icon, bool isPressed) {
+  Widget timeLineWidget(
+    String name,
+    Color color,
+    Icon icon,
+  ) {
     return Flexible(
-        child: AnimatedContainer(
-      duration: Duration(seconds: 4),
-      height: (isPressed) ? 22 : 2,
+        child: Container(
+      height: 22,
       decoration:
           BoxDecoration(borderRadius: BorderRadius.circular(20), boxShadow: [
         BoxShadow(
