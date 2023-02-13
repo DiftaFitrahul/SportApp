@@ -1,16 +1,18 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
-import 'Widget/timeline-widget.dart';
 import 'provider/provider.dart';
 
 class TimeLinePage extends ConsumerWidget {
   final List timeLines;
   final int number;
-  
+  final bool isPressed;
+
   const TimeLinePage(
-      {super.key, required this.timeLines, required this.number});
-  
+      {super.key,
+      required this.timeLines,
+      required this.number,
+      required this.isPressed});
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
@@ -24,38 +26,29 @@ class TimeLinePage extends ConsumerWidget {
   Widget displayTimeline(timeLine, dataMatch) {
     if (timeLine['type'] == 'substitution') {
       return subtitution(
-        homeTeamId: dataMatch.homeTeam?['team_id'] ?? 0,
-        timeLine: timeLine
-      );
+          homeTeamId: dataMatch.homeTeam?['team_id'] ?? 0, timeLine: timeLine);
     } else if (timeLine['type'] == 'goal') {
       return goal(
-        homeTeamId: dataMatch.homeTeam?['team_id'] ?? 0,
-        timeLine: timeLine
-      );
+          homeTeamId: dataMatch.homeTeam?['team_id'] ?? 0, timeLine: timeLine);
     }
     if (timeLine['type'] == 'yellowcard') {
       return yellowCard(
-        homeTeamId: dataMatch.homeTeam?['team_id'] ?? 0,
-        timeLine: timeLine
-      );
+          homeTeamId: dataMatch.homeTeam?['team_id'] ?? 0, timeLine: timeLine);
     }
     if (timeLine['type'] == 'injury') {
       return injury(
-        homeTeamId: dataMatch.homeTeam?['team_id'] ?? 0,
-        timeLine: timeLine
-      );
+          homeTeamId: dataMatch.homeTeam?['team_id'] ?? 0, timeLine: timeLine);
     }
     if (timeLine['type'] == 'back from injury') {
       return backFromInjury(
-        homeTeamId: dataMatch.homeTeam?['team_id'] ?? 0,
-        timeLine: timeLine
-      );
+          homeTeamId: dataMatch.homeTeam?['team_id'] ?? 0, timeLine: timeLine);
     } else {
       return const Text('No Data');
     }
   }
 
-  Widget goal({required int homeTeamId, required Map<String,dynamic> timeLine}) {
+  Widget goal(
+      {required int homeTeamId, required Map<String, dynamic> timeLine}) {
     return Padding(
       padding: const EdgeInsets.symmetric(vertical: 6),
       child: Row(
@@ -93,7 +86,8 @@ class TimeLinePage extends ConsumerWidget {
     );
   }
 
-  Widget yellowCard({required int homeTeamId, required Map<String,dynamic> timeLine}) {
+  Widget yellowCard(
+      {required int homeTeamId, required Map<String, dynamic> timeLine}) {
     return Padding(
       padding: const EdgeInsets.symmetric(vertical: 6),
       child: Row(
@@ -131,7 +125,8 @@ class TimeLinePage extends ConsumerWidget {
     );
   }
 
-  Widget injury({required int homeTeamId, required Map<String,dynamic> timeLine}) {
+  Widget injury(
+      {required int homeTeamId, required Map<String, dynamic> timeLine}) {
     return Padding(
       padding: const EdgeInsets.symmetric(vertical: 6),
       child: Row(
@@ -169,7 +164,8 @@ class TimeLinePage extends ConsumerWidget {
     );
   }
 
-  Widget backFromInjury({required int homeTeamId, required Map<String,dynamic> timeLine}) {
+  Widget backFromInjury(
+      {required int homeTeamId, required Map<String, dynamic> timeLine}) {
     return Padding(
       padding: const EdgeInsets.symmetric(vertical: 6),
       child: Row(
@@ -207,9 +203,8 @@ class TimeLinePage extends ConsumerWidget {
     );
   }
 
-  Widget subtitution({
-    required int homeTeamId, required Map<String,dynamic> timeLine
-  }) {
+  Widget subtitution(
+      {required int homeTeamId, required Map<String, dynamic> timeLine}) {
     return Padding(
       padding: const EdgeInsets.symmetric(vertical: 6),
       child: IntrinsicHeight(
@@ -285,8 +280,9 @@ class TimeLinePage extends ConsumerWidget {
 
   Widget timeLineWidget(String name, Color color, Icon icon) {
     return Flexible(
-        child: Container(
-      height: 23,
+        child: AnimatedContainer(
+      duration: Duration(seconds: 4),
+      height: (isPressed) ? 22 : 2,
       decoration:
           BoxDecoration(borderRadius: BorderRadius.circular(20), boxShadow: [
         BoxShadow(
