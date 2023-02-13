@@ -14,7 +14,7 @@ class Statistics extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: const EdgeInsets.only(left: 30, right: 30, top: 8),
+      padding: const EdgeInsets.only(left: 30, right: 30),
       child: Consumer(
         builder: (context, ref, child) {
           Map<String, dynamic> dataHomeStatistics = {};

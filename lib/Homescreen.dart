@@ -28,6 +28,7 @@ class HomeScreen extends StatelessWidget {
                         child: const Text("Real Madrid vs Barcelona")),
                     onTap: () async {
                       getMatchData(ref, matchData);
+                      
                       //await Future.delayed(const Duration(seconds: 1));
                       Navigator.pushNamed(context, MatchPage.routeName);
                     },

@@ -3,27 +3,27 @@ import 'dart:developer';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:sportapp/Stats.dart';
+import 'package:sportapp/lineup.dart';
+import 'package:sportapp/model/matchTeams.dart';
+import 'package:sportapp/model/standing_league.dart';
+import 'package:sportapp/model/tabBarSelection.dart';
 import 'package:sportapp/provider/provider.dart';
 import 'package:sportapp/standings.dart';
 import 'package:sportapp/result.dart';
 import 'package:sportapp/timeline.dart';
 
-class MatchPage extends ConsumerStatefulWidget {
+class MatchPage extends ConsumerWidget {
   static const routeName = '/matchPge';
-  const MatchPage({super.key});
+  MatchPage({super.key});
 
   @override
-  ConsumerState<MatchPage> createState() => _MatchPageState();
-}
+  Widget build(BuildContext context, WidgetRef ref) {
+    final statisticsIsPressed =
+        ref.watch(tabBarDataNotifier).statisticsIsPressed;
+    final timelineIsPressed = ref.watch(tabBarDataNotifier).timelineIsPressed;
+    final lineupsIsPressed = ref.watch(tabBarDataNotifier).lineupsIsPressed;
+    final rankingIsPressed = ref.watch(tabBarDataNotifier).rankingIsPressed;
 
-class _MatchPageState extends ConsumerState<MatchPage> {
-  bool statisticsIsPressed = true;
-  bool timelineIsPressed = false;
-  bool lineupsIsPressed = false;
-  bool rankingIsPressed = false;
-
-  @override
-  Widget build(BuildContext context) {
     double height = MediaQuery.of(context).size.height * 0.45;
     final dataMatch = ref.watch(matchDataNotifier);
     return ref.watch(dataStandingsProvider(dataMatch.seasonId.toString())).when(
@@ -63,12 +63,9 @@ class _MatchPageState extends ConsumerState<MatchPage> {
                               children: [
                                 TextButton(
                                     onPressed: () {
-                                      setState(() {
-                                        statisticsIsPressed = true;
-                                        timelineIsPressed = false;
-                                        lineupsIsPressed = false;
-                                        rankingIsPressed = false;
-                                      });
+                                      ref
+                                          .read(tabBarDataNotifier.notifier)
+                                          .updateStatisticPressed();
                                     },
                                     child: Text(
                                       "Statistics",
@@ -79,12 +76,9 @@ class _MatchPageState extends ConsumerState<MatchPage> {
                                     )),
                                 TextButton(
                                     onPressed: () {
-                                      setState(() {
-                                        statisticsIsPressed = false;
-                                        timelineIsPressed = true;
-                                        lineupsIsPressed = false;
-                                        rankingIsPressed = false;
-                                      });
+                                      ref
+                                          .read(tabBarDataNotifier.notifier)
+                                          .updateTimelinePressed();
                                     },
                                     child: Text(
                                       "Timeline",
@@ -95,12 +89,9 @@ class _MatchPageState extends ConsumerState<MatchPage> {
                                     )),
                                 TextButton(
                                   onPressed: () {
-                                    setState(() {
-                                      statisticsIsPressed = false;
-                                      timelineIsPressed = false;
-                                      lineupsIsPressed = true;
-                                      rankingIsPressed = false;
-                                    });
+                                    ref
+                                        .read(tabBarDataNotifier.notifier)
+                                        .updateLineupPressed();
                                   },
                                   child: Text(
                                     "Lineups",
@@ -112,12 +103,9 @@ class _MatchPageState extends ConsumerState<MatchPage> {
                                 ),
                                 TextButton(
                                     onPressed: () {
-                                      setState(() {
-                                        statisticsIsPressed = false;
-                                        timelineIsPressed = false;
-                                        lineupsIsPressed = false;
-                                        rankingIsPressed = true;
-                                      });
+                                      ref
+                                          .read(tabBarDataNotifier.notifier)
+                                          .updateRankingPressed();
                                     },
                                     child: Text(
                                       "Ranking",
@@ -162,24 +150,21 @@ class _MatchPageState extends ConsumerState<MatchPage> {
                         delegate: SliverChildBuilderDelegate(
                       childCount: 1,
                       (context, index) {
-                        return getTitleSliver();
+                        return getTitleSliver(
+                            ref.watch(tabBarDataNotifier), dataMatch);
                       },
                     )),
                     SliverList(
                         delegate: SliverChildBuilderDelegate(
-                            childCount: (statisticsIsPressed)
-                                ? 1
-                                : dataMatch.matchEvent!.length, (_, index) {
-                      if (statisticsIsPressed) {
-                        return const Statistics();
-                      } else {
-                        return TimeLinePage(
-                          number: index,
-                          timeLines: dataMatch.matchEvent ?? [],
-                          isPressed: timelineIsPressed,
-                        );
-                      }
-                    })),
+                            childCount: getDataLength(
+                                ref.watch(tabBarDataNotifier),
+                                dataMatch,
+                                standingLeague),
+                            (_, index) => getDataSliver(
+                                ref.watch(tabBarDataNotifier),
+                                dataMatch,
+                                index,
+                                standingLeague))),
                   ],
                 )));
       },
@@ -192,21 +177,21 @@ class _MatchPageState extends ConsumerState<MatchPage> {
     );
   }
 
-  Widget statisticText() {
+  Widget statisticAndTimelineText(MatchTeams dataMatchTeams) {
     return Padding(
-      padding: const EdgeInsets.only(left: 30, right: 30, top: 8),
+      padding: const EdgeInsets.only(left: 30, right: 30, top: 8, bottom: 15),
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
           Text(
-            "Real Madrid",
+            dataMatchTeams.homeTeam!['name'],
             style: TextStyle(
                 color: Colors.indigoAccent[700],
                 fontWeight: FontWeight.w500,
                 fontSize: 15),
           ),
           Text(
-            "FC Barcelona",
+            dataMatchTeams.awayTeam!['name'],
             style: TextStyle(
                 color: Colors.indigoAccent[700],
                 fontWeight: FontWeight.w500,
@@ -251,15 +236,43 @@ class _MatchPageState extends ConsumerState<MatchPage> {
     );
   }
 
-  Widget getTitleSliver() {
-    if (statisticsIsPressed == true) {
-      return statisticText();
-    } else if (timelineIsPressed == true) {
-      return const Text("TimeLIne");
-    } else if (lineupsIsPressed == true) {
+  Widget getTitleSliver(
+      TabBarSelection tabBarSelection, MatchTeams dataMatchTeams) {
+    if (tabBarSelection.statisticsIsPressed == true) {
+      return statisticAndTimelineText(dataMatchTeams);
+    } else if (tabBarSelection.timelineIsPressed == true) {
+      return statisticAndTimelineText(dataMatchTeams);
+    } else if (tabBarSelection.lineupsIsPressed == true) {
       return const Text("Lineup");
     } else {
       return standings();
+    }
+  }
+
+  int getDataLength(TabBarSelection tabBarSelection, MatchTeams dataMatchTeams,
+      List<StandingLeague> dataLeagues) {
+    if (tabBarSelection.statisticsIsPressed == true) {
+      return 1;
+    } else if (tabBarSelection.timelineIsPressed == true) {
+      return dataMatchTeams.matchEvent!.length;
+    } else if (tabBarSelection.lineupsIsPressed == true) {
+      return 1;
+    } else {
+      return dataLeagues.length;
+    }
+  }
+
+  Widget getDataSliver(TabBarSelection tabBarSelection,
+      MatchTeams dataMatchTeams, int index, List<StandingLeague> dataLeagues) {
+    if (tabBarSelection.statisticsIsPressed == true) {
+      return const Statistics();
+    } else if (tabBarSelection.timelineIsPressed == true) {
+      return TimeLinePage(
+          timeLines: dataMatchTeams.matchEvent ?? [], number: index);
+    } else if (tabBarSelection.lineupsIsPressed == true) {
+      return const LineUp();
+    } else {
+      return Standings(number: index, data: dataLeagues);
     }
   }
 }

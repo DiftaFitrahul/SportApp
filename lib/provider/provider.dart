@@ -42,7 +42,7 @@ class TabBarNotifier extends StateNotifier<TabBarSelection> {
   TabBarNotifier() : super(InitialTabBarSelection());
 
   void updateStatisticPressed() {
-    state.copyWith(
+    state = state.copyWith(
         statisticsIsPressed: true,
         timelineIsPressed: false,
         lineupsIsPressed: false,
@@ -50,21 +50,23 @@ class TabBarNotifier extends StateNotifier<TabBarSelection> {
   }
 
   void updateLineupPressed() {
-    state.copyWith(
+    state = state.copyWith(
         statisticsIsPressed: false,
         timelineIsPressed: false,
         lineupsIsPressed: true,
         rankingIsPressed: false);
   }
+
   void updateTimelinePressed() {
-    state.copyWith(
+    state = state.copyWith(
         statisticsIsPressed: false,
         timelineIsPressed: true,
         lineupsIsPressed: false,
         rankingIsPressed: false);
   }
+
   void updateRankingPressed() {
-    state.copyWith(
+    state = state.copyWith(
         statisticsIsPressed: false,
         timelineIsPressed: false,
         lineupsIsPressed: false,

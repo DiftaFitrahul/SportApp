@@ -15,7 +15,7 @@ class MainApp extends StatelessWidget {
     return MaterialApp(
         debugShowCheckedModeBanner: false, home: const HomeScreen(),
         routes: { 
-          MatchPage.routeName: (context) => const MatchPage()
+          MatchPage.routeName: (context) => MatchPage()
         },
         );
   }
