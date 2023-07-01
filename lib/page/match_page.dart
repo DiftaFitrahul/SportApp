@@ -2,15 +2,15 @@ import 'dart:developer';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:sportapp/Stats.dart';
-import 'package:sportapp/lineup.dart';
 import 'package:sportapp/model/matchTeams.dart';
 import 'package:sportapp/model/standing_league.dart';
 import 'package:sportapp/model/tabBarSelection.dart';
+import 'package:sportapp/page/Stats.dart';
+import 'package:sportapp/page/lineup.dart';
+import 'package:sportapp/page/result.dart';
+import 'package:sportapp/page/standings.dart';
+import 'package:sportapp/page/timeline.dart';
 import 'package:sportapp/provider/provider.dart';
-import 'package:sportapp/standings.dart';
-import 'package:sportapp/result.dart';
-import 'package:sportapp/timeline.dart';
 
 class MatchPage extends ConsumerWidget {
   static const routeName = '/matchPge';

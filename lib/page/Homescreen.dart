@@ -1,9 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/src/widgets/framework.dart';
-import 'package:flutter/src/widgets/placeholder.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:sportapp/match_page.dart';
 import 'package:sportapp/model/matchTeams.dart';
+import 'package:sportapp/page/match_page.dart';
 import 'package:sportapp/provider/provider.dart';
 
 class HomeScreen extends StatelessWidget {
@@ -34,7 +32,7 @@ class HomeScreen extends StatelessWidget {
                     },
                   ),
                 ),
-                error: (error, stackTrace) => const Text("Erro"),
+                error: (error, stackTrace) => const Text("Error"),
                 loading: () => const CircularProgressIndicator(),
               )),
     );

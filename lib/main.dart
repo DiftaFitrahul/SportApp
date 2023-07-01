@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:sportapp/Homescreen.dart';
-import 'package:sportapp/match_page.dart';
+import 'package:sportapp/page/Homescreen.dart';
+import 'package:sportapp/page/match_page.dart';
 
 void main() {
   runApp(const ProviderScope(child: MainApp()));
