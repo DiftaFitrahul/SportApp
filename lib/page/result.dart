@@ -1,15 +1,18 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:sportapp/provider/provider.dart';
 
-class Result extends StatelessWidget {
+class Result extends ConsumerWidget {
   const Result({super.key});
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, WidgetRef ref) {
+    final matchData = ref.watch(matchDataNotifier);
     return Column(
       mainAxisAlignment: MainAxisAlignment.center,
       children: [
         const Text(
-          "LaLiga",
+          "La Liga",
           style: TextStyle(
               color: Colors.white, fontWeight: FontWeight.bold, fontSize: 25),
         ),
@@ -23,16 +26,16 @@ class Result extends StatelessWidget {
             Column(
               children: [
                 Image.network(
-                  "https://cdn.sportdataapi.com/images/soccer/teams/100/113.png",
+                  matchData.homeTeam?['logo'] ?? '',
                   width: 100,
                   height: 100,
                 ),
                 const SizedBox(
                   height: 25,
                 ),
-                const Text(
-                  "Real Madrid",
-                  style: TextStyle(
+                Text(
+                  matchData.homeTeam?['name'] ?? " ",
+                  style: const TextStyle(
                       color: Colors.white,
                       fontSize: 15,
                       fontWeight: FontWeight.w500),
@@ -120,39 +123,30 @@ class Result extends StatelessWidget {
                 const SizedBox(
                   height: 20,
                 ),
-                const Text(
-                  "90",
-                  style: TextStyle(color: Colors.white60, fontSize: 20),
+                Text(
+                  matchData.minute.toString(),
+                  style: const TextStyle(color: Colors.white60, fontSize: 20),
                 ),
-                Row(
-                  children: const [
-                    Text("2 : ",
-                        style: TextStyle(
-                            color: Colors.white,
-                            fontSize: 30,
-                            fontWeight: FontWeight.bold)),
-                    Text("3",
-                        style: TextStyle(
-                            color: Colors.white,
-                            fontSize: 30,
-                            fontWeight: FontWeight.bold))
-                  ],
-                )
+                Text(matchData.goalStats?['ft_score'] ?? '',
+                    style: const TextStyle(
+                        color: Colors.white,
+                        fontSize: 30,
+                        fontWeight: FontWeight.bold)),
               ],
             ),
             Column(
               children: [
                 Image.network(
-                  "https://cdn.sportdataapi.com/images/soccer/teams/100/99.png",
+                  matchData.awayTeam?['logo'] ?? '',
                   width: 100,
                   height: 100,
                 ),
                 const SizedBox(
                   height: 25,
                 ),
-                const Text(
-                  "FC Barcelona",
-                  style: TextStyle(
+                Text(
+                  matchData.awayTeam?['name'] ?? '',
+                  style: const TextStyle(
                       color: Colors.white,
                       fontSize: 15,
                       fontWeight: FontWeight.w500),

@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:sportapp/model/standing_league.dart';
+import 'package:sportapp/page/shimmer_widget.dart';
 import 'package:sportapp/service/FetchData/fd_teambyid.dart';
-import 'package:sportapp/shimmer_widget.dart';
 
 class Standings extends StatelessWidget {
   final int? number;
@@ -57,10 +57,10 @@ class Standings extends StatelessWidget {
                 ],
               );
             } else if (snapshot.hasError) {
-              return Text("error");
+              return const Text("error");
             }
-            return Row(
-              children: const [
+            return const Row(
+              children: [
                 Padding(
                   padding: EdgeInsets.only(right: 5, left: 3),
                   child: ShimmerWidget.rectangular(
