@@ -18,17 +18,17 @@ class MatchPage extends StatefulWidget {
 }
 
 class _MatchPageState extends State<MatchPage> {
-  bool statisticsIsPressed = true;
+  bool statisticsIsPressed = false;
   bool timelineIsPressed = false;
   bool lineupsIsPressed = false;
-  bool rankingIsPressed = false;
- 
+  bool rankingIsPressed = true;
+
   @override
   Widget build(BuildContext context) {
     double height = MediaQuery.of(context).size.height * 0.45;
     return Scaffold(
       body: FutureBuilder(
-        future: FetchDataMatch.fetchData("325104"),
+        future: FetchDataStandingsLeague.fetchData(),
         builder: (context, snapshot) {
           if (snapshot.hasData) {
             return Container(
@@ -173,13 +173,11 @@ class _MatchPageState extends State<MatchPage> {
                   )),
                   SliverList(
                       delegate: SliverChildBuilderDelegate(
-                          childCount: (rankingIsPressed) ? 1 : 1,
+                          childCount:
+                              (rankingIsPressed) ? snapshot.data!.length : 1,
                           (_, index) => (rankingIsPressed)
-                              ? const Statistics()
-                              : TimeLine(
-                                  timeLine: snapshot.data!.matchEvent!,
-                                  number: 1,
-                                )))
+                              ? Standings(number: index, data: snapshot.data!)
+                              : const Statistics()))
                 ],
               ),
             );
